@@ -130,6 +130,36 @@ variable "primary_instance" {
   }
 }
 
+
+
+variable "read_pool_instance" {
+  description = "List of Read Pool Instances to be created"
+  type = list(object({
+    instance_id        = string
+    display_name       = string
+    node_count         = optional(number, 1)
+    database_flags     = optional(map(string))
+    machine_cpu_count  = optional(number, 2)
+    machine_type       = optional(string)
+    ssl_mode           = optional(string)
+    require_connectors = optional(bool)
+    query_insights_config = optional(object({
+      query_string_length     = optional(number)
+      record_application_tags = optional(bool)
+      record_client_address   = optional(bool)
+      query_plans_per_minute  = optional(number)
+    }))
+    enable_public_ip = optional(bool, false)
+    cidr_range       = optional(list(string))
+  }))
+  nullable = false
+  default  = []
+  validation {
+    condition     = alltrue([for rp in var.read_pool_instance : contains([1, 2, 4, 8, 16, 32, 64, 96, 128], rp.machine_cpu_count)])
+    error_message = "machine_cpu_count must be one of [1, 2, 4, 8, 16, 32, 64, 96, 128]"
+  }
+}
+
 # ###############  PSC Consumer project related variables  ################## 
 variable "attachment_project_number" {
   description = "The project number in which attachment will be provisioned"

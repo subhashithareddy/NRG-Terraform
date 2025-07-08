@@ -175,6 +175,19 @@ variable "primary_instance" {
   }
 }
 
+# variable "create_instance" {
+#   description = "Set to true to create read pool instances. Default value: false"
+#   type        = bool
+#   default     = false
+# }
+
+# variable "number_of_read_pool_instances" {
+#   type        = number
+#   description = "The numbers of read pool instances to creates"
+#   default     = null
+# }
+
+
 variable "read_pool_instance" {
   description = "List of Read Pool Instances to be created"
   type = list(object({

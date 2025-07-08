@@ -32,6 +32,11 @@ module "nrg_usage_empire_alloy_db" {
 
   primary_instance = var.primary_instance
 
+  read_pool_instance = var.read_pool_instance
+  
+
+  # depends_on = [google_compute_network.default, google_compute_global_address.private_ip_alloc, google_service_networking_connection.vpc_connection]
+
 }
 
 

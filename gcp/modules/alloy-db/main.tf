@@ -250,64 +250,67 @@ resource "google_alloydb_instance" "primary" {
 # * availability_type: Because 1 node pool (read_pool_config.node_count) is always zonal, two or more is always regional.
 # * gce_zone
 # * network_config.enable_outbound_public_ip
-# resource "google_alloydb_instance" "read_pool" {
-#   for_each      = local.read_pool_instance
-#   cluster       = google_alloydb_cluster.default.name
-#   instance_id   = each.key
-#   instance_type = "READ_POOL"
-#   labels        = var.primary_instance.labels
-#   annotations   = var.primary_instance.annotations
 
-#   dynamic "network_config" {
-#     for_each = each.value.enable_public_ip ? ["network_config"] : []
-#     content {
-#       enable_public_ip = each.value.enable_public_ip
-#       dynamic "authorized_external_networks" {
-#         for_each = each.value.cidr_range == null ? [] : toset(each.value.cidr_range)
-#         content {
-#           cidr_range = authorized_external_networks.value
-#         }
-#       }
-#     }
-#   }
 
-#   read_pool_config {
-#     node_count = each.value.node_count
-#   }
+resource "google_alloydb_instance" "read_pool" {
+  #count         = var.create_instance ? var.number_of_read_pool_instances : 0
+  for_each      = local.read_pool_instance
+  cluster       = google_alloydb_cluster.default.name
+  instance_id   = each.key
+  instance_type = "READ_POOL"
+  labels        = var.primary_instance.labels
+  annotations   = var.primary_instance.annotations
 
-#   database_flags = each.value.database_flags
-#   machine_config {
-#     cpu_count    = each.value.machine_cpu_count
-#     machine_type = each.value.machine_type
-#   }
+  dynamic "network_config" {
+    for_each = each.value.enable_public_ip ? ["network_config"] : []
+    content {
+      enable_public_ip = each.value.enable_public_ip
+      dynamic "authorized_external_networks" {
+        for_each = each.value.cidr_range == null ? [] : toset(each.value.cidr_range)
+        content {
+          cidr_range = authorized_external_networks.value
+        }
+      }
+    }
+  }
 
-#   dynamic "client_connection_config" {
-#     for_each = lookup(each.value, "ssl_mode", null) != null || lookup(each.value, "require_connectors", null) != null ? ["client_connection_config"] : []
-#     content {
-#       require_connectors = try(each.value.require_connectors, null)
-#       ssl_config {
-#         ssl_mode = try(each.value.ssl_mode, null)
-#       }
-#     }
-#   }
+  read_pool_config {
+    node_count = each.value.node_count
+  }
 
-#   dynamic "query_insights_config" {
-#     for_each = lookup(each.value, "query_insights_config", null) != null ? ["query_insights_config"] : []
+  database_flags = each.value.database_flags
+  machine_config {
+    cpu_count    = each.value.machine_cpu_count
+    # machine_type = each.value.machine_type
+  }
 
-#     content {
-#       query_string_length     = try(each.value.query_insights_config.query_string_length, null)
-#       record_application_tags = try(each.value.query_insights_config.record_application_tags, null)
-#       record_client_address   = try(each.value.query_insights_config.record_client_address, null)
-#       query_plans_per_minute  = try(each.value.query_insights_config.query_plans_per_minute, null)
-#     }
-#   }
+  dynamic "client_connection_config" {
+    for_each = lookup(each.value, "ssl_mode", null) != null || lookup(each.value, "require_connectors", null) != null ? ["client_connection_config"] : []
+    content {
+      require_connectors = try(each.value.require_connectors, null)
+      ssl_config {
+        ssl_mode = try(each.value.ssl_mode, null)
+      }
+    }
+  }
 
-#   dynamic "psc_instance_config" {
-#     for_each = var.psc_enabled ? ["psc_instance_config"] : []
-#     content {
-#       allowed_consumer_projects = var.psc_allowed_consumer_projects
-#     }
-#   }
+  dynamic "query_insights_config" {
+    for_each = lookup(each.value, "query_insights_config", null) != null ? ["query_insights_config"] : []
 
-#   depends_on = [google_alloydb_instance.primary]
-# }
+    content {
+      query_string_length     = try(each.value.query_insights_config.query_string_length, null)
+      record_application_tags = try(each.value.query_insights_config.record_application_tags, null)
+      record_client_address   = try(each.value.query_insights_config.record_client_address, null)
+      query_plans_per_minute  = try(each.value.query_insights_config.query_plans_per_minute, null)
+    }
+  }
+
+  dynamic "psc_instance_config" {
+    for_each = var.psc_enabled ? ["psc_instance_config"] : []
+    content {
+      allowed_consumer_projects = var.psc_allowed_consumer_projects
+    }
+  }
+
+  depends_on = [google_alloydb_instance.primary]
+}
