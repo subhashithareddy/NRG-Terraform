@@ -160,133 +160,22 @@ variable "read_pool_instance" {
   }
 }
 
-# ###############  PSC Consumer project related variables  ################## 
-variable "attachment_project_number" {
-  description = "The project number in which attachment will be provisioned"
-  type        = string
-}
-
-variable "attachment_project_id" {
-  description = "The ID of the project in which attachment will be provisioned"
-  type        = string
-  # default     = "consumer-project-463506"
-
-}
-
-# variable "region_central" {
-#   description = "The region for cluster in central us"
-#   type        = string
-#   # default     = "us-central1"
-# }
-
-# variable "consumer_vpc_subnet_name" {
-#   description = "The consumer subnet where psc endpoint is created"
+# # ###############  PSC Consumer project related variables  ################## 
+# variable "attachment_project_number" {
+#   description = "The project number in which attachment will be provisioned"
 #   type        = string
 # }
 
-# variable "psc_endpoint_ip_address" {
-#   description = "The IP address of the PSC endpoint"
+# variable "attachment_project_id" {
+#   description = "The ID of the project in which attachment will be provisioned"
 #   type        = string
-# }
-
-# variable "consumer_vpc_name" {
-#   description = "The consumer subnet where psc endpoint is created"
-#   type        = string
+#   # default     = "consumer-project-463506"
 # }
 
 
-################## Prividers Variables ##############
-/*
-variable "nrg_usage_empire_service_ac_key" {
-  description = "Service account key used for Terraform "
-  type        = string
-}
-
-variable "nrg_consumer_service_ac_key" {
-  description = "Service account key used for Terraform "
-  type        = string
-}
-
-variable "project" {
-  description = "Project ID of NRG usage empire infra"
-  type        = string
-}
-
-variable "region" {
-  description = "Region to deploy nrg usage empire dev resources"
-  type        = string
-}
 
 
 
-
-
-###############  Alloy DB Variables  ################## 
-variable "cluster_id" {
-  description = "The ID of the alloydb cluster"
-  type        = string
-}
-
-variable "cluster_location" {
-  description = "TLocation where AlloyDb cluster will be deployed"
-  type        = string
-  default = "us-central1"
-}
-
-variable "project_id" {
-  description = "he ID of the project in which to provision resources"
-  type        = string
-  ##default = "us-central1"
-}
-
-
-variable "cluster_labels" {
-  description = "User-defined labels for the alloydb cluster"
-  type        = map(string)
-  
-}
-
-variable "cluster_display_name" {
-  description = "Human readable display name for the Alloy DB Cluster"
-  type        = string
-  default     = null
-} 
-
-
-
-
-
-
-
-variable "project_id" {
-  description = "The ID of the project in which to provision resources."
-  type        = string
-}
-
-variable "attachment_project_id" {
-  description = "The ID of the project in which attachment will be provisioned"
-  type        = string
-}
-
-variable "attachment_project_number" {
-  description = "The project number in which attachment will be provisioned"
-  type        = string
-}
-
-variable "region_central" {
-  default     = "us-central1"
-  description = "The region for cluster in central us"
-  type        = string
-}
-
-variable "region_east" {
-  default     = "us-east1"
-  description = "The region for cluster in east us"
-  type        = string
-}
-
-
-*/
 
 
 variable "cluster_initial_user" {

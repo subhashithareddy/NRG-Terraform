@@ -66,14 +66,3 @@ cluster_initial_user ={
   user= "subhash"
   password= "changeme"
 }
-
-
-
-
-# ###############  PSC Consumer project related variables  ################## 
-attachment_project_number = "144097428147"
-attachment_project_id     = "consumer-project-463506"
-# region_central            = "us-central1"
-# consumer_vpc_subnet_name  = "psc-endpoint-subnet"
-# psc_endpoint_ip_address   = "10.2.0.10"
-# consumer_vpc_name         = "psc-endpoint-vpc"

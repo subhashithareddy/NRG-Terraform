@@ -10,7 +10,7 @@ module "nrg_usage_empire_alloy_db" {
   database_version                 = var.database_version
 
   psc_enabled                      = var.psc_enabled
-  psc_allowed_consumer_projects    = [var.attachment_project_number]
+  # psc_allowed_consumer_projects    = [var.attachment_project_number]
 
 
 
