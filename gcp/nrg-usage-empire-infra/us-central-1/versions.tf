@@ -1,11 +1,13 @@
-provider "google" {
-  credentials = "alloydb-project-key.json"
-  # project     = var.project_id
-  region      = var.region
-}
-
-provider "google-beta" {
-  credentials = "alloydb-project-key.json"
-  # project     = var.project_id
-  region      = var.region
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+      version = "~>6.42.0"
+    }
+    google-beta = {
+      source = "hashicorp/google-beta"
+      version = "~>6.42.0"
+    }
+  }
+  required_version = "1.12.2"
 }
